@@ -100,7 +100,7 @@ def predict_disease(image_path):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     welcome_message = """
-"🌿 Welcome to Mycalmilla AI Plant Doctor"
+"🌿Welcome to Mycalmilla AI Plant Doctor"
 
 I can help identify diseases affecting:
 
@@ -148,26 +148,16 @@ async def handle_photo(
         label, confidence = predict_disease(image_path)
 
         if label == "Unknown Plant":
-            await update.message.reply_text(
-                "🪴 Sorry, I currently support only:
-
-"
-                "• Tomato
-"
-                "• Potato
-"
-                "• Pepper
-
-"
-                "Your uploaded image appears "
-                "to belong to a crop outside "
-                "my current training dataset.
-
-"
-                "I’m continually improving "
-                "and may support this crop "
-                "in future updates 😊"
-            )
+    await update.message.reply_text(
+        "🪴 Sorry, I currently support only:\n\n"
+        "• Tomato\n"
+        "• Potato\n"
+        "• Pepper\n"
+        "Your uploaded image appears to belong to a crop outside "
+        "my current training dataset.\n\n"
+        "I’m continually improving and may support this crop "
+        "in future updates 😊"
+    )
             return
 
         if confidence >= 0.90:
@@ -186,69 +176,40 @@ async def handle_photo(
         })
 
         response = (
-            f"🌱 *{disease['name']}*
-
-"
-            f"{confidence_icon} "
-            f"*Confidence:* "
-            f"{confidence*100:.1f}%
-
-"
-            f"📖 *Explanation:*
-"
-            f"{disease['explanation']}
-
-"
-        )
+    f"🌱 *{disease['name']}*\n\n"
+    f"{confidence_icon} *Confidence:* {confidence*100:.1f}%\n\n"
+    f"📖 *Explanation:*\n"
+    f"{disease['explanation']}\n"
+)
 
         if disease['treatment']:
-            response += "*💊 Treatment:*
-"
-            response += "
-".join(
-                f"• {t}" for t in disease['treatment']
-            )
-            response += "
+    response += "*💊 Treatment:*\n"
+    response += "\n".join(f"• {t}" for t in disease['treatment'])
+    response += "\n\n"
 
-"
+response += (
+    f"🗓️ *Monitoring:*\n"
+    f"{disease['monitoring_schedule']}\n\n"
+)
 
-        response += (
-            f"🗓️ *Monitoring:*
-"
-            f"{disease['monitoring_schedule']}
-
-"
-        )
-
-        if disease['prevention_rules']:
-            response += "*🛡️ Prevention:*
-"
-            response += "
-".join(
-                f"• {p}" for p in disease['prevention_rules']
-            )
-            response += "
-
-"
+if disease['prevention_rules']:
+    response += "*🛡️ Prevention:*\n"
+    response += "\n".join(f"• {p}" for p in disease['prevention_rules'])
+    response += "\n\n"
 
         await update.message.reply_text(
             response,
             parse_mode='Markdown'
         )
     except Exception as e:
-        logger.error(str(e))
-        await update.message.reply_text(
-            "❌ Unable to process image.
-
-"
-            "Please upload:
-"
-            "• a clearer image
-"
-            "• good lighting
-"
-            "• close-up plant leaf"
-        )
+    logger.error(str(e))
+    await update.message.reply_text(
+        "❌ Unable to process image.\n\n"
+        "Please upload:\n"
+        "• a clearer image\n"
+        "• good lighting\n"
+        "• close-up plant leaf"
+)
     finally:
         if os.path.exists(image_path):
             os.remove(image_path)
