@@ -99,28 +99,22 @@ def predict_disease(image_path):
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    welcome_message = """
-🌿 Welcome to Mycalmilla AI Plant Doctor
-
-I can help identify diseases affecting:
-
-• Tomato
-• Potato
-• Pepper
-
-Simply send a clear image of a plant leaf.
-
-You will receive:
-
-✅ Disease detection
-✅ Confidence score
-✅ Organic treatment suggestions
-✅ Prevention tips
-✅ Disease explanations
-"""
+    welcome_message = (
+        "🌿 Welcome to Mycalmilla AI Plant Doctor\n"
+        "I can help identify diseases affecting:\n\n"
+        "• Tomato\n"
+        "• Potato\n"
+        "• Pepper\n"
+        "Simply send a clear image of a plant leaf.\n\n"
+        "You will receive:\n\n"
+        "✅ Disease detection\n"
+        "✅ Confidence score\n"
+        "✅ Organic treatment suggestions\n"
+        "✅ Prevention tips\n"
+        "✅ Disease explanations"
+    )
 
     await update.message.reply_text(welcome_message)
-
 
 async def help_cmd(
     update: Update,
