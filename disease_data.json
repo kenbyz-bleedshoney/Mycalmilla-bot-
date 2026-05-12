@@ -1,0 +1,92 @@
+{
+    "Tomato_Early_blight": {
+        "explanation": "A fungal disease caused by Alternaria solani. It begins with dark concentric spots on older leaves and gradually spreads upward, reducing photosynthesis and weakening plant productivity.",
+        "treatment": "Remove infected leaves immediately. Apply organic fungicides such as Neem oil (azadirachtin-based) or copper-based fungicides (e.g., Bordeaux mixture, copper hydroxide) every 5 to 7 days. Improve air circulation around plants and use drip irrigation to avoid wetting leaves.",
+        "monitoring": "Check the plant after 3 days for reduction in new spots. Significant improvement is usually visible within 7 to 10 days.",
+        "prevention": "Rotate crops regularly, avoid overcrowding, mulch soil with straw or compost, and water only at the base of plants."
+    },
+    "Tomato_Late_blight": {
+        "explanation": "A fast-spreading water mold disease that thrives in cool and humid conditions. It causes dark lesions on leaves, stems, and fruits and can destroy an entire tomato farm quickly.",
+        "treatment": "Remove heavily infected plants immediately and dispose of them carefully. Apply organic copper fungicides (e.g., fixed coppers, copper soaps) every 5 days during wet conditions. Improve field drainage and consider biological fungicides like those containing Bacillus subtilis.",
+        "monitoring": "Inspect plants after 48 hours to confirm the spread has slowed. Full recovery monitoring should continue for 2 weeks.",
+        "prevention": "Use disease-resistant varieties. Ensure proper spacing for good airflow. Avoid overhead irrigation and manage humidity, especially in greenhouses."
+    },
+    "Potato___Early_blight": {
+        "explanation": "A fungal infection affecting potato foliage and stems, commonly appearing as brown circular spots with yellow edges.",
+        "treatment": "Prune infected leaves. Apply approved organic fungicides such as neem extract, copper spray (e.g., basic copper sulfate), or biofungicides containing Trichoderma harzianum every 5 to 7 days.",
+        "monitoring": "Monitor after 4 days for reduced lesion expansion. Improvement is commonly seen within 1 week.",
+        "prevention": "Practice crop rotation, maintain healthy soil nutrition with balanced organic fertilizers, and avoid excessive humidity."
+    },
+    "Potato___Late_blight": {
+        "explanation": "A devastating disease caused by Phytophthora infestans. It spreads rapidly during rainy or humid periods and can destroy both leaves and tubers.",
+        "treatment": "Destroy severely infected plants immediately. Apply copper-based organic fungicide (e.g., copper oxychloride, copper sulfate) and reduce excess moisture around crops. Consider systemic biological fungicides.",
+        "monitoring": "Check after 2 days for reduced spread. Continuous monitoring should continue for 14 days.",
+        "prevention": "Plant certified disease-free seed potatoes and ensure proper drainage. Plant resistant potato varieties."
+    },
+    "Pepper__bell___Bacterial_spot": {
+        "explanation": "A bacterial disease causing small dark lesions on pepper leaves and fruits, often reducing crop quality and yield.",
+        "treatment": "Apply copper bactericide (e.g., copper hydroxide, copper sulfate) every 5 days. Remove infected leaves and sterilize farm tools with a bleach solution or hydrogen peroxide after use.",
+        "monitoring": "Inspect plants after 3 to 5 days to confirm reduction in new bacterial spots.",
+        "prevention": "Avoid handling plants when wet. Practice proper field sanitation, including removing plant debris. Use disease-free seeds and transplants."
+    },
+    "Tomato_healthy": {
+        "explanation": "The tomato plant appears healthy with no visible disease symptoms.",
+        "treatment": "No treatment is required.",
+        "monitoring": "Continue routine monitoring every 7 days.",
+        "prevention": "Maintain balanced organic fertilization, consistent irrigation, and diligent weed management. Ensure good soil health."
+    },
+    "Potato___healthy": {
+        "explanation": "The potato plant appears healthy and free from visible disease symptoms.",
+        "treatment": "No treatment is required.",
+        "monitoring": "Continue field inspection weekly.",
+        "prevention": "Maintain healthy soil conditions through organic matter amendments and proper irrigation practices. Use compost for nutrients."
+    },
+    "Pepper__bell___healthy": {
+        "explanation": "The pepper plant appears healthy and disease free.",
+        "treatment": "No treatment is necessary.",
+        "monitoring": "Continue checking leaves weekly for early disease signs.",
+        "prevention": "Use balanced organic nutrients, maintain proper field hygiene, and ensure good air circulation around plants."
+    },
+    "Tomato_Bacterial_spot": {
+        "explanation": "A bacterial disease in tomatoes characterized by small, water-soaked spots on leaves that turn dark brown or black. Can also affect fruits and stems, leading to defoliation and yield loss.",
+        "treatment": "Remove infected plant parts. Apply copper-based bactericides (e.g., copper soaps, copper hydroxide) preventively. Avoid overhead irrigation and work with plants when they are dry to prevent spread. Consider biological control agents containing Streptomyces lydicus.",
+        "monitoring": "Check after 3-5 days for new spot formation. Continue monitoring weekly for signs of remission or further spread.",
+        "prevention": "Use disease-free seeds or transplants. Practice crop rotation. Sanitize tools and hands with rubbing alcohol. Ensure good air circulation."
+    },
+    "Tomato_Leaf_Mold": {
+        "explanation": "A fungal disease caused by Passalora fulva, thriving in high humidity. Symptoms include yellowish spots on the upper leaf surface and olive-green to brown velvety patches on the lower surface.",
+        "treatment": "Improve air circulation and reduce humidity. Apply organic fungicides specific for leaf mold like sulfur, neem oil, or biofungicides containing Bacillus amyloliquefaciens. Remove and destroy severely infected leaves.",
+        "monitoring": "Inspect plants after 5-7 days for reduced fungal growth. Full recovery may take 2-3 weeks with consistent treatment.",
+        "prevention": "Use resistant varieties. Space plants adequately. Prune lower leaves to improve airflow. Provide good ventilation in greenhouses. Avoid overhead watering, favoring drip irrigation."
+    },
+    "Tomato_Septoria_leaf_spot": {
+        "explanation": "A common fungal disease (Septoria lycopersici) that creates numerous small, circular spots with dark brown borders and gray or tan centers on lower leaves, often with tiny black dots (pycnidia).",
+        "treatment": "Remove and destroy infected lower leaves. Apply organic fungicidal sprays (e.g., copper formulations like liquid copper or sulfur-based sprays) every 7-10 days, especially during humid periods. Mulch around plants with organic materials to reduce splash-up of spores.",
+        "monitoring": "Check after 7 days for a reduction in new spots. Consistent treatment over several weeks is often needed for control.",
+        "prevention": "Sanitize tools thoroughly. Practice crop rotation with non-solanaceous crops. Stake plants to improve air circulation. Avoid overhead watering. Use disease-free seeds/plants."
+    },
+    "Tomato_Spider_mites_Two_spotted_spider_mite": {
+        "explanation": "Tiny arachnids that feed on plant sap, causing stippling (tiny white or yellow dots) on leaves, leading to bronzing, curling, and eventually leaf drop. Fine webbing may be visible on the undersides of leaves.",
+        "treatment": "Spray with insecticidal soap, neem oil (azadirachtin), or horticultural oil (e.g., mineral oil, paraffinic oil). Introduce natural predators like predatory mites (Phytoseiulus persimilis). Increase humidity around plants as mites prefer dry conditions.",
+        "monitoring": "Inspect undersides of leaves every 3-5 days for mite activity and webbing. Look for new growth free of stippling.",
+        "prevention": "Monitor plants regularly. Ensure good plant hydration. Avoid broad-spectrum pesticides that kill natural predators. Remove weeds that can host mites."
+    },
+    "Tomato__Target_Spot": {
+        "explanation": "A fungal disease (Corynespora cassiicola) characterized by circular lesions with concentric rings (target-like) on leaves, stems, and fruits. Lesions may be surrounded by a yellow halo.",
+        "treatment": "Remove infected plant debris and lower leaves. Apply organic fungicides containing chlorothalonil (if allowed organically) or copper. Ensure good air circulation. Consider biofungicides like Bacillus amyloliquefaciens.",
+        "monitoring": "Check after 5-7 days for reduced lesion expansion and new growth. Continue treatment until symptoms are controlled.",
+        "prevention": "Use resistant varieties if available. Practice crop rotation. Avoid overhead irrigation. Sanitize tools and equipment with organic cleansers."
+    },
+    "Tomato__Tomato_YellowLeaf__Curl_Virus": {
+        "explanation": "A destructive viral disease transmitted by whiteflies. Causes severe stunting, upward curling of leaf margins, yellowing of young leaves, and reduction in fruit size and yield.",
+        "treatment": "No direct chemical treatment for the virus. Focus on whitefly control: use yellow sticky traps, insecticidal soaps, neem oil sprays, or introduce natural enemies like Encarsia formosa. Remove and destroy infected plants immediately to prevent spread.",
+        "monitoring": "Monitor whitefly populations weekly using sticky traps. Check new growth for symptom development. Continue monitoring throughout the growing season.",
+        "prevention": "Use virus-resistant varieties. Install physical barriers (fine mesh row covers) to exclude whiteflies. Control weeds that host whiteflies. Practice good field sanitation. Avoid planting new tomatoes near infected fields."
+    },
+    "Tomato__Tomato_mosaic_virus": {
+        "explanation": "A highly contagious viral disease causing a mosaic pattern of light and dark green on leaves, often accompanied by leaf distortion, blistering, and stunting. Can reduce fruit quality and yield.",
+        "treatment": "No cure for the virus. Remove and destroy infected plants immediately to prevent spread by burning or burying deep. Wash hands with soap and water and sterilize tools with a 10% bleach solution or milk solution (protein inactivates virus) after handling infected plants.",
+        "monitoring": "Regularly inspect plants for mosaic patterns or distortion on new growth. Monitor for any signs of spread to adjacent plants.",
+        "prevention": "Use disease-free seeds or resistant varieties. Avoid using tobacco products while handling plants. Sanitize tools and hands frequently. Control weeds which can be alternative hosts. Handle plants gently to avoid transmitting the virus mechanically."
+    }
+}

@@ -1,0 +1,4 @@
+tflite-runtime
+python-telegram-bot==20.6
+numpy
+pillow
