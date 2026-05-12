@@ -1,4 +1,3 @@
-
 import json
 import os
 import logging
@@ -103,7 +102,8 @@ async def start(
     context: ContextTypes.DEFAULT_TYPE
 ):
     await update.message.reply_text(
-        """🌱 Welcome to Mycalmilla AI Plant Doctor
+    """
+🌿 Welcome to Mycalmilla AI Plant Doctor
 
 I can help identify diseases affecting:
 
@@ -119,8 +119,10 @@ You will receive:
 ✅ Confidence score
 ✅ Organic treatment suggestions
 ✅ Prevention tips
-✅ Disease explanations"""
+✅ Disease explanations
+"""
     )
+     
 
 
 async def help_cmd(
