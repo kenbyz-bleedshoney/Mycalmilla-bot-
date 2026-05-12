@@ -97,12 +97,9 @@ def predict_disease(image_path):
         )
     return label, confidence
 
-async def start(
-    update: Update,
-    context: ContextTypes.DEFAULT_TYPE
-):
-    await update.message.reply_text(
-    """
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    welcome_message = """
 🌿 Welcome to Mycalmilla AI Plant Doctor
 
 I can help identify diseases affecting:
@@ -121,8 +118,8 @@ You will receive:
 ✅ Prevention tips
 ✅ Disease explanations
 """
-    )
-     
+
+    await update.message.reply_text(welcome_message)
 
 
 async def help_cmd(
