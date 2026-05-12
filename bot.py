@@ -86,18 +86,18 @@ def predict_disease(image_path):
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_message = (
-        "🌿 Welcome to Mycalmilla AI Plant Doctor\n\n"
+        "ðŸŒ¿ Welcome to Mycalmilla AI Plant Doctor\n\n"
         "I can help identify diseases affecting:\n\n"
-        "• Tomato\n"
-        "• Potato\n"
-        "• Pepper\n\n"
+        "â€¢ Tomato\n"
+        "â€¢ Potato\n"
+        "â€¢ Pepper\n\n"
         "Simply send a clear image of a plant leaf.\n\n"
         "You will receive:\n\n"
-        "✅ Disease detection\n"
-        "✅ Confidence score\n"
-        "✅ Organic treatment suggestions\n"
-        "✅ Prevention tips\n"
-        "✅ Disease explanations"
+        "âœ… Disease detection\n"
+        "âœ… Confidence score\n"
+        "âœ… Organic treatment suggestions\n"
+        "âœ… Prevention tips\n"
+        "âœ… Disease explanations"
     )
     await update.message.reply_text(welcome_message)
 
@@ -116,30 +116,30 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     image_path = '/tmp/temp.jpg'
     await file.download_to_drive(image_path)
 
-    await update.message.reply_text("🔎 Mycalmilla AI is analyzing your plant image...")
+    await update.message.reply_text("ðŸ”Ž Mycalmilla AI is analyzing your plant image...")
 
     try:
         label, confidence = predict_disease(image_path)
 
         if label == "Unknown Plant":
             await update.message.reply_text(
-                "🪴 Sorry, I currently support only:\n\n"
-                "• Tomato\n"
-                "• Potato\n"
-                "• Pepper\n\n"
+                "ðŸª´ Sorry, I currently support only:\n\n"
+                "â€¢ Tomato\n"
+                "â€¢ Potato\n"
+                "â€¢ Pepper\n\n"
                 "Your uploaded image appears to belong to a crop outside "
                 "my current training dataset.\n\n"
                 "I'm continually improving and may support this crop "
-                "in future updates 😊"
+                "in future updates ðŸ˜Š"
             )
             return
 
         if confidence >= 0.90:
-            confidence_icon = "🟢"
+            confidence_icon = "ðŸŸ¢"
         elif confidence >= 0.75:
-            confidence_icon = "🟠"
+            confidence_icon = "ðŸŸ "
         else:
-            confidence_icon = "🔴"
+            confidence_icon = "ðŸ”´"
 
         disease = disease_db.get(label, {
             "name": label.replace('___', ' - ').replace('__', ' - '),
@@ -150,25 +150,25 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         })
 
         response = (
-            f"🌱 *{disease['name']}*\n\n"
+            f"ðŸŒ± *{disease['name']}*\n\n"
             f"{confidence_icon} *Confidence:* {confidence * 100:.1f}%\n\n"
-            f"📖 *Explanation:*\n"
+            f"ðŸ“– *Explanation:*\n"
             f"{disease['explanation']}\n\n"
         )
 
         if disease['treatment']:
-            response += "*💊 Treatment:*\n"
-            response += "\n".join(f"• {t}" for t in disease['treatment'])
+            response += "*ðŸ’Š Treatment:*\n"
+            response += "\n".join(f"â€¢ {t}" for t in disease['treatment'])
             response += "\n\n"
 
         response += (
-            f"🗓️ *Monitoring:*\n"
+            f"ðŸ—“ï¸ *Monitoring:*\n"
             f"{disease['monitoring_schedule']}\n\n"
         )
 
         if disease['prevention_rules']:
-            response += "*🛡️ Prevention:*\n"
-            response += "\n".join(f"• {p}" for p in disease['prevention_rules'])
+            response += "*ðŸ›¡ï¸ Prevention:*\n"
+            response += "\n".join(f"â€¢ {p}" for p in disease['prevention_rules'])
             response += "\n\n"
 
         await update.message.reply_text(response, parse_mode='Markdown')
@@ -176,11 +176,11 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         logger.error(str(e))
         await update.message.reply_text(
-            "❌ Unable to process image.\n\n"
+            "âŒ Unable to process image.\n\n"
             "Please upload:\n"
-            "• a clearer image\n"
-            "• good lighting\n"
-            "• close-up plant leaf"
+            "â€¢ a clearer image\n"
+            "â€¢ good lighting\n"
+            "â€¢ close-up plant leaf"
         )
     finally:
         if os.path.exists(image_path):
