@@ -7,7 +7,10 @@ import numpy as np
 from PIL import Image
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-import tensorflow as tf
+try:
+    import tflite_runtime.interpreter as tflite
+except ImportError:
+    import tensorflow.lite as tflite
 
 from telegram import Update
 
@@ -50,7 +53,7 @@ CLASS_NAMES = [
 
 MODEL_PATH = 'mycalmilla_plant_model.tflite'  # Fixed: removed /content/ path (Colab-specific)
 
-interpreter = tf.lite.Interpreter(model_path=MODEL_PATH)
+interpreter = tflite.Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()
