@@ -82,7 +82,7 @@ def predict_disease(image_path):
     predicted_idx = int(np.argmax(preds))
     label = CLASS_NAMES[predicted_idx]
 
-    if confidence < 0.60:
+    if confidence < 0.40:
         return "Unknown Plant", confidence
 
     return label, confidence
