@@ -174,8 +174,8 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(response, parse_mode='Markdown')
 
     except Exception as e:
-    import traceback
-    logger.error(f"Full error: {traceback.format_exc()}")
+        import traceback
+        logger.error(f"Full error: {traceback.format_exc()}")
         await update.message.reply_text(
             "\u274c Unable to process image.\n\n"
             "Please upload:\n"
