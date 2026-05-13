@@ -8,7 +8,7 @@ import numpy as np
 from PIL import Image
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-MODEL_PATH = "Mycalmilla_Plant_Model.tflite"
+MODEL_PATH = "mycalmilla_plant_model.tflite"
 
 try:
     from ai_edge_litert.interpreter import Interpreter as tflite_Interpreter
