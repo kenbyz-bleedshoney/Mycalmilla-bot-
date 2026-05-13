@@ -50,7 +50,7 @@ CLASS_NAMES = [
 
 MODEL_PATH = 'mycalmilla_plant_model.tflite'
 
-interpreter = tflite.Interpreter(model_path=MODEL_PATH)
+interpreter = LiteInterpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()
