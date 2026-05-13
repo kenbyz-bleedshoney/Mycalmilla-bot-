@@ -6,6 +6,7 @@ import threading
 import numpy as np
 
 from PIL import Image
+import tflite_runtime.interpreter as tflite
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 MODEL_PATH = "mycalmilla_plant_model.tflite"
