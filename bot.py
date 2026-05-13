@@ -9,19 +9,12 @@ from PIL import Image
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 try:
-    import tflite_runtime.interpreter as tflite
+    from ai_edge_litert.interpreter import Interpreter as tflite_Interpreter
+    interpreter = tflite_Interpreter(model_path=MODEL_PATH)
 except ImportError:
-    import tensorflow.lite as tflite
-
-from telegram import Update
-
-from telegram.ext import (
-    Application,
-    CommandHandler,
-    MessageHandler,
-    filters,
-    ContextTypes
-)
+    import tflite_runtime.interpreter as tflite
+    interpreter = tflite.Interpreter(model_path=MODEL_PATH)
+    
 
 logging.basicConfig(
     level=logging.INFO,
