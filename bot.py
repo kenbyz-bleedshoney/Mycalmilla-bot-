@@ -6,18 +6,21 @@ import threading
 import numpy as np
 
 from PIL import Image
-import tflite_runtime.interpreter as tflite
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-MODEL_PATH = "mycalmilla_plant_model.tflite"
-
 try:
-    from ai_edge_litert.interpreter import Interpreter as tflite_Interpreter
-    interpreter = tflite_Interpreter(model_path=MODEL_PATH)
+    from ai_edge_litert.interpreter import Interpreter as LiteInterpreter
 except ImportError:
-    import tflite_runtime.interpreter as tflite
-    interpreter = tflite.Interpreter(model_path=MODEL_PATH)
-    
+    from tflite_runtime.interpreter import Interpreter as LiteInterpreter
+
+from telegram import Update
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    filters,
+    ContextTypes
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -25,10 +28,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
 with open('disease_data.json', 'r') as f:
     disease_db = json.load(f)
-
 
 CLASS_NAMES = [
     'Pepper__bell___Bacterial_spot',
@@ -57,7 +58,6 @@ input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
 IMG_SIZE = 224
-
 
 def predict_disease(image_path):
     img = Image.open(image_path)
