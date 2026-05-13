@@ -69,7 +69,7 @@ def predict_disease(image_path):
     img = img.resize((224, 224))
     img_array = np.array(img)
     img_array = img_array.astype(np.float32)
-    img_array = img_array / 255.0
+    img_array = (img_array / 127.5) - 1.0
     img_array = np.expand_dims(img_array, axis=0)
 
     interpreter.set_tensor(input_details[0]['index'], img_array)
@@ -82,7 +82,7 @@ def predict_disease(image_path):
     predicted_idx = int(np.argmax(preds))
     label = CLASS_NAMES[predicted_idx]
 
-    if confidence < 0.40:
+    if confidence < 0.60:
         return "Unknown Plant", confidence
 
     return label, confidence
