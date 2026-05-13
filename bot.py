@@ -52,7 +52,7 @@ CLASS_NAMES = [
     'Tomato_healthy'
 ]
 
-MODEL_PATH = 'mycalmilla_plant_model.tflite'  # Fixed: removed /content/ path (Colab-specific)
+MODEL_PATH = 'mycalmilla_plant_model.tflite'
 
 interpreter = tflite.Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
@@ -90,18 +90,18 @@ def predict_disease(image_path):
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_message = (
-        "ðŸŒ¿ Welcome to Mycalmilla AI Plant Doctor\n\n"
+        "\U0001f33f Welcome to Mycalmilla AI Plant Doctor\n\n"
         "I can help identify diseases affecting:\n\n"
-        "â€¢ Tomato\n"
-        "â€¢ Potato\n"
-        "â€¢ Pepper\n\n"
+        "\u2022 Tomato\n"
+        "\u2022 Potato\n"
+        "\u2022 Pepper\n\n"
         "Simply send a clear image of a plant leaf.\n\n"
         "You will receive:\n\n"
-        "âœ… Disease detection\n"
-        "âœ… Confidence score\n"
-        "âœ… Organic treatment suggestions\n"
-        "âœ… Prevention tips\n"
-        "âœ… Disease explanations"
+        "\u2705 Disease detection\n"
+        "\u2705 Confidence score\n"
+        "\u2705 Organic treatment suggestions\n"
+        "\u2705 Prevention tips\n"
+        "\u2705 Disease explanations"
     )
     await update.message.reply_text(welcome_message)
 
@@ -120,30 +120,30 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     image_path = '/tmp/temp.jpg'
     await file.download_to_drive(image_path)
 
-    await update.message.reply_text("ðŸ”Ž Mycalmilla AI is analyzing your plant image...")
+    await update.message.reply_text("\U0001f50e Mycalmilla AI is analyzing your plant image...")
 
     try:
         label, confidence = predict_disease(image_path)
 
         if label == "Unknown Plant":
             await update.message.reply_text(
-                "ðŸª´ Sorry, I currently support only:\n\n"
-                "â€¢ Tomato\n"
-                "â€¢ Potato\n"
-                "â€¢ Pepper\n\n"
+                "\U0001fab4 Sorry, I currently support only:\n\n"
+                "\u2022 Tomato\n"
+                "\u2022 Potato\n"
+                "\u2022 Pepper\n\n"
                 "Your uploaded image appears to belong to a crop outside "
                 "my current training dataset.\n\n"
                 "I'm continually improving and may support this crop "
-                "in future updates ðŸ˜Š"
+                "in future updates \U0001f60a"
             )
             return
 
         if confidence >= 0.90:
-            confidence_icon = "ðŸŸ¢"
+            confidence_icon = "\U0001f7e2"
         elif confidence >= 0.75:
-            confidence_icon = "ðŸŸ "
+            confidence_icon = "\U0001f7e0"
         else:
-            confidence_icon = "ðŸ”´"
+            confidence_icon = "\U0001f534"
 
         disease = disease_db.get(label, {
             "name": label.replace('___', ' - ').replace('__', ' - '),
@@ -154,25 +154,25 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         })
 
         response = (
-            f"ðŸŒ± *{disease['name']}*\n\n"
+            f"\U0001f331 *{disease['name']}*\n\n"
             f"{confidence_icon} *Confidence:* {confidence * 100:.1f}%\n\n"
-            f"ðŸ“– *Explanation:*\n"
+            f"\U0001f4d6 *Explanation:*\n"
             f"{disease['explanation']}\n\n"
         )
 
         if disease['treatment']:
-            response += "*ðŸ’Š Treatment:*\n"
-            response += "\n".join(f"â€¢ {t}" for t in disease['treatment'])
+            response += "*\U0001f48a Treatment:*\n"
+            response += "\n".join(f"\u2022 {t}" for t in disease['treatment'])
             response += "\n\n"
 
         response += (
-            f"ðŸ—“ï¸ *Monitoring:*\n"
+            f"\U0001f5d3 *Monitoring:*\n"
             f"{disease['monitoring_schedule']}\n\n"
         )
 
         if disease['prevention_rules']:
-            response += "*ðŸ›¡ï¸ Prevention:*\n"
-            response += "\n".join(f"â€¢ {p}" for p in disease['prevention_rules'])
+            response += "*\U0001f6e1 Prevention:*\n"
+            response += "\n".join(f"\u2022 {p}" for p in disease['prevention_rules'])
             response += "\n\n"
 
         await update.message.reply_text(response, parse_mode='Markdown')
@@ -180,11 +180,11 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         logger.error(str(e))
         await update.message.reply_text(
-            "âŒ Unable to process image.\n\n"
+            "\u274c Unable to process image.\n\n"
             "Please upload:\n"
-            "â€¢ a clearer image\n"
-            "â€¢ good lighting\n"
-            "â€¢ close-up plant leaf"
+            "\u2022 a clearer image\n"
+            "\u2022 good lighting\n"
+            "\u2022 close-up plant leaf"
         )
     finally:
         if os.path.exists(image_path):
@@ -198,7 +198,7 @@ class HealthHandler(BaseHTTPRequestHandler):
         self.wfile.write(b"OK")
 
     def log_message(self, format, *args):
-        pass  # Silence default HTTP logs
+        pass
 
 
 def run_health_server():
@@ -213,7 +213,6 @@ def main():
     if not TOKEN:
         raise ValueError("TELEGRAM_TOKEN environment variable not set. Please set it.")
 
-    # Start health check server in background thread (required for Railway)
     health_thread = threading.Thread(target=run_health_server, daemon=True)
     health_thread.start()
 
