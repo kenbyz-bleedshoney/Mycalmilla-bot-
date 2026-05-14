@@ -9,12 +9,11 @@ from PIL import Image
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 try:
-    import tflite_runtime.interpreter as tflite
+    from ai_edge_litert.interpreter import Interpreter as LiteInterpreter
 except ImportError:
-    import tensorflow.lite as tflite
+    from tflite_runtime.interpreter import Interpreter as LiteInterpreter
 
 from telegram import Update
-
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -29,10 +28,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
 with open('disease_data.json', 'r') as f:
     disease_db = json.load(f)
-
 
 CLASS_NAMES = [
     'Pepper__bell___Bacterial_spot',
@@ -54,14 +51,13 @@ CLASS_NAMES = [
 
 MODEL_PATH = 'mycalmilla_plant_model.tflite'
 
-interpreter = tflite.Interpreter(model_path=MODEL_PATH)
+interpreter = LiteInterpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
 IMG_SIZE = 224
-
 
 def predict_disease(image_path):
     img = Image.open(image_path)
@@ -218,7 +214,7 @@ def main():
     app.add_handler(MessageHandler(filters.PHOTO & ~filters.COMMAND, handle_photo))
 
     logger.info("Bot is starting...")
-    app.run_polling()
+    app.run_polling(drop_pending_updates=True)
     logger.info("Bot stopped.")
 
 
