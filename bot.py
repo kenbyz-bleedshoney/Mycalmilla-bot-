@@ -65,7 +65,7 @@ def predict_disease(image_path):
     img = img.resize((224, 224))
     img_array = np.array(img)
     img_array = img_array.astype(np.float32)
-    img_array = img_array / 255.0
+ 
     img_array = np.expand_dims(img_array, axis=0)
 
     interpreter.set_tensor(input_details[0]['index'], img_array)
