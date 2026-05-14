@@ -9,11 +9,12 @@ from PIL import Image
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 try:
-    from ai_edge_litert.interpreter import Interpreter as LiteInterpreter
+    import tflite_runtime.interpreter as tflite
 except ImportError:
-    from tflite_runtime.interpreter import Interpreter as LiteInterpreter
+    import tensorflow.lite as tflite
 
 from telegram import Update
+
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -28,8 +29,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
 with open('disease_data.json', 'r') as f:
     disease_db = json.load(f)
+
 
 CLASS_NAMES = [
     'Pepper__bell___Bacterial_spot',
@@ -51,13 +54,14 @@ CLASS_NAMES = [
 
 MODEL_PATH = 'mycalmilla_plant_model.tflite'
 
-interpreter = LiteInterpreter(model_path=MODEL_PATH)
+interpreter = tflite.Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
 IMG_SIZE = 224
+
 
 def predict_disease(image_path):
     img = Image.open(image_path)
@@ -141,35 +145,29 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             confidence_icon = "\U0001f534"
 
-        disease = disease_db.get(label, {
-            "name": label.replace('___', ' - ').replace('__', ' - '),
-            "explanation": "No detailed info available.",
-            "treatment": [],
-            "monitoring_schedule": "Check weekly",
-            "prevention_rules": []
-        })
+        disease = disease_db.get(label)
+        if not disease:
+            disease = {
+                "explanation": "No detailed info available.",
+                "treatment": "No treatment info available.",
+                "monitoring": "Check weekly.",
+                "prevention": "No prevention info available."
+            }
+
+        disease_name = label.replace('___', ' - ').replace('__', ' - ').replace('_', ' ')
 
         response = (
-            f"\U0001f331 *{disease['name']}*\n\n"
+            f"\U0001f331 *{disease_name}*\n\n"
             f"{confidence_icon} *Confidence:* {confidence * 100:.1f}%\n\n"
             f"\U0001f4d6 *Explanation:*\n"
-            f"{disease['explanation']}\n\n"
-        )
-
-        if disease['treatment']:
-            response += "*\U0001f48a Treatment:*\n"
-            response += "\n".join(f"\u2022 {t}" for t in disease['treatment'])
-            response += "\n\n"
-
-        response += (
+            f"{disease.get('explanation', 'N/A')}\n\n"
+            f"*\U0001f48a Treatment:*\n"
+            f"{disease.get('treatment', 'N/A')}\n\n"
             f"\U0001f5d3 *Monitoring:*\n"
-            f"{disease['monitoring_schedule']}\n\n"
+            f"{disease.get('monitoring', 'Check weekly')}\n\n"
+            f"*\U0001f6e1 Prevention:*\n"
+            f"{disease.get('prevention', 'N/A')}\n\n"
         )
-
-        if disease['prevention_rules']:
-            response += "*\U0001f6e1 Prevention:*\n"
-            response += "\n".join(f"\u2022 {p}" for p in disease['prevention_rules'])
-            response += "\n\n"
 
         await update.message.reply_text(response, parse_mode='Markdown')
 
@@ -220,7 +218,7 @@ def main():
     app.add_handler(MessageHandler(filters.PHOTO & ~filters.COMMAND, handle_photo))
 
     logger.info("Bot is starting...")
-    app.run_polling(drop_pending_updates=True)
+    app.run_polling()
     logger.info("Bot stopped.")
 
 
