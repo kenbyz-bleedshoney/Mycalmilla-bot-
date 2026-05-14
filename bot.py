@@ -106,7 +106,7 @@ def setup_gemini():
         knowledge_base = build_knowledge_base()
         system_prompt = GEMINI_SYSTEM_PROMPT.format(knowledge_base=knowledge_base)
         gemini_model = genai.GenerativeModel(
-            model_name='gemini-1.5-flash-002'
+            model_name='gemini-1.5-flash-002',
             system_instruction=system_prompt
         )
         logger.info("Gemini AI configured successfully")
@@ -159,15 +159,15 @@ COMPLIMENTS = ['great', 'excellent', 'amazing', 'awesome', 'good job',
 
 
 # ── Disease Prediction ────────────────────────────────────────
-def predict_disease(image_path):
-    img = Image.open(image_path).convert("RGB").resize((224, 224)) # MobileNet default size
-    img_array = np.array(img).astype(np.float32)
+def def predict_disease(image_path):
+    img = Image.open(image_path).convert("RGB").resize((224, 224))
     
-    # CRITICAL: Normalize your pixels!
-    img_array = img_array / 255.0 
+    # This line handles both normalization and the correct float type
+    img_array = (np.array(img).astype(np.float32)) / 255.0
     
     img_array = np.expand_dims(img_array, axis=0)
-    # ... rest of your prediction logic
+
+    # KEEP THESE LINES - They are the engine of your model
     interpreter.set_tensor(input_details[0]['index'], img_array)
     interpreter.invoke()
 
