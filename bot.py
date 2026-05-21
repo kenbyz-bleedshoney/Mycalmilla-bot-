@@ -105,7 +105,7 @@ def setup_gemini():
         knowledge_base = build_knowledge_base()
         system_prompt = GEMINI_SYSTEM_PROMPT.format(knowledge_base=knowledge_base)
         gemini_model = genai.GenerativeModel(
-            model_name='gemini-1.5-flash',
+            model_name='gemini-2.0-flash',
             system_instruction=system_prompt
         )
         logger.info("Gemini AI configured successfully")
