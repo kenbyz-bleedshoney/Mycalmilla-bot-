@@ -192,7 +192,7 @@ async def ask_gemini(user_message: str, last_disease: str = None) -> str:
         context_prefix = f"[Context: The user's last plant scan detected '{disease_name}']\n\n"
 
     try:
-        response = gemini_model.generate_content(context_prefix + user_message)
+        response = await gemini_model.generate_content_async(context_prefix + user_message)
         return response.text
     except Exception as e:
         logger.error(f"Gemini error: {e}")
