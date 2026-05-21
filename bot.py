@@ -179,7 +179,11 @@ def predict_disease(image_path):
 
 # ── Gemini Chat ───────────────────────────────────────────────
 async def ask_gemini(user_message: str, last_disease: str = None) -> str:
+    import asyncio
+    import traceback
+
     if not gemini_model:
+        logger.warning("ask_gemini called but gemini_model is None — API key missing or setup failed")
         return (
             "I can answer farming questions but my AI brain isn't connected right now.\n"
             "Please send a leaf photo and I'll analyze it! \U0001f331"
@@ -191,12 +195,50 @@ async def ask_gemini(user_message: str, last_disease: str = None) -> str:
         disease_name = last_disease.replace('___', ' - ').replace('__', ' - ').replace('_', ' ')
         context_prefix = f"[Context: The user's last plant scan detected '{disease_name}']\n\n"
 
+    prompt = context_prefix + user_message
+    logger.info(f"Sending to Gemini — prompt length: {len(prompt)} chars")
+
     try:
-        response = await gemini_model.generate_content_async(context_prefix + user_message)
+        # Run the blocking call in a thread executor to avoid blocking the event loop
+        loop = asyncio.get_event_loop()
+        response = await loop.run_in_executor(
+            None,
+            lambda: gemini_model.generate_content(prompt)
+        )
+        logger.info("Gemini responded successfully")
         return response.text
+
     except Exception as e:
-        logger.error(f"Gemini error: {e}")
-        return "I had trouble thinking right now. Please try again! \U0001f331"
+        full_error = traceback.format_exc()
+        logger.error(f"Gemini FULL error:\n{full_error}")
+
+        err_str = str(e).lower()
+
+        if "quota" in err_str or "429" in err_str or "resource_exhausted" in err_str:
+            return (
+                "\U0001f6d1 My AI thinking limit has been reached for now.\n\n"
+                "This is a free API quota limit — it resets every minute or daily.\n"
+                "Please wait a moment and try again! \U0001f331"
+            )
+        elif "api_key" in err_str or "invalid" in err_str or "401" in err_str or "403" in err_str:
+            return (
+                "\U0001f512 My AI key has an issue. Please contact the admin.\n\n"
+                "You can still send a leaf photo for disease scanning! \U0001f331"
+            )
+        elif "deadline" in err_str or "timeout" in err_str or "504" in err_str:
+            return (
+                "\u23f1 Gemini took too long to respond. Please try again in a moment! \U0001f331"
+            )
+        elif "candidate" in err_str or "safety" in err_str or "blocked" in err_str:
+            return (
+                "\u26a0\ufe0f My response was blocked by a safety filter. "
+                "Try rephrasing your farming question! \U0001f331"
+            )
+        else:
+            return (
+                f"I had trouble thinking right now. Please try again! \U0001f331\n\n"
+                f"_(Error hint: {str(e)[:120]})_"
+            )
 
 
 # ── Intent Detection ──────────────────────────────────────────
